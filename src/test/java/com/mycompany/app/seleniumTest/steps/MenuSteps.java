@@ -5,7 +5,9 @@ import com.mycompany.app.seleniumTest.pages.MenuPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 
 /**
@@ -17,22 +19,17 @@ public class MenuSteps {
         page= new MenuPage(driver);
     }
 
-    public void clickOnBreakfastButton(){
-        page.getBreakfastButton().click();
-    }
-
     public Map<Cuisine,List<String>> findAllSnacks(){
-        Map<Cuisine,List<String>> cuisinesSnacks= new HashMap<>();
+        Map<Cuisine,List<String>> cuisineAndSnacks= new HashMap<>();
         for (Cuisine cuisine:findAllCuisines()){
-            cuisinesSnacks.put(cuisine,page.getSnacks(cuisine.getCuisineName()));
+            cuisineAndSnacks.put(cuisine,page.getSnacks(cuisine.getCuisineName()));
         }
-        return cuisinesSnacks;
+        return cuisineAndSnacks;
     }
 
     public Set<Cuisine> findAllCuisines(){
         Set<Cuisine> cuisines= new HashSet<>();
         for(WebElement cuisineElement:page.getCuisines()){
-            if(cuisineElement.getText().equals("Уураинская")){continue;}
             cuisines.add(new Cuisine(cuisineElement.getText()));
         }
         return cuisines;

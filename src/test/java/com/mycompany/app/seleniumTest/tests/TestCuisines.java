@@ -17,7 +17,8 @@ import static junit.framework.TestCase.assertTrue;
 public class TestCuisines {
     WebDriver driver;
     MenuSteps step;
-    Set<String> mandatoryCuisineNames = new HashSet<>(Arrays.asList("Русская",
+    Set<String> mandatoryCuisineNames = new HashSet<>(Arrays.asList("Украинская",
+            "Русская",
             "Японская",
             "Китайская",
             "Тайская",
@@ -46,14 +47,12 @@ public class TestCuisines {
 
     @Test
     public void menuShouldContainCuisines(){
-        step.clickOnBreakfastButton();
         Set<Cuisine> currentCuisineNames = step.findAllCuisines();
         assertTrue(step.menuShouldContainCuisines(mandatoryCuisineNames, currentCuisineNames));
     }
 
     @Test
     public void frenchMenuShouldContainSnacks(){
-        step.clickOnBreakfastButton();
         assertTrue(step.cuisineShouldContainSnacks("Французская",mandatoryFrenchSnacks));
     }
 }

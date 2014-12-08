@@ -2,6 +2,9 @@ package com.mycompany.app.seleniumTest;
 
 import org.openqa.selenium.WebElement;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  */
 public class Cuisine {
@@ -37,4 +40,5 @@ public class Cuisine {
     public String getCuisineName(){
         return name;
     }
+
 }

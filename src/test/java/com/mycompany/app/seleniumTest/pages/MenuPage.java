@@ -1,5 +1,6 @@
 package com.mycompany.app.seleniumTest.pages;
 
+import com.mycompany.app.seleniumTest.Cuisine;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,55 +14,50 @@ import java.util.concurrent.TimeUnit;
  */
 public class MenuPage {
     final WebDriver driver;
-    final static String PAGEURL ="http://gioia-profiterole.rhcloud.com/menu";
+    final static String PAGEURL ="http://gioia-profiterole.rhcloud.com/allOfRecipes";
     WebDriverWait wait;
 
     public MenuPage(WebDriver driver){
         driver.manage().window().maximize();
         driver.get(PAGEURL);
         this.driver=driver;
-        wait= new WebDriverWait(driver, 50);
+        wait= new WebDriverWait(driver, 10);
     }
-    private void implicitWait(int seconds){
+    private void implicitWait(long seconds){
         driver.manage().timeouts().implicitlyWait(seconds, TimeUnit.SECONDS);
     }
 
-    public WebElement getBreakfastButton(){
-        return driver.findElement(By.xpath("/html/body/div/div[2]/div/div/div[1]/button[1]"));
+    public WebElement getSnacksButton(){
+        return driver.findElement(By.xpath("//*[contains(text(), 'Закуски') and @class='accordion-toggle']"));
     }
 
     public WebElement getBackToCuisinesButton(){
-        implicitWait(50);
+        implicitWait(10);
         return driver.findElement(By.id("back"));
     }
 
     public List<WebElement> getCuisines(){
-        implicitWait(50);
-        return driver.findElements(By.xpath("//div[@id='cuisine']/div[@class='btn']"));
+        implicitWait(10);
+        return driver.findElements(By.xpath("//*[@id='cuisine']/div[@class='btn']"));
     }
 
     public WebElement getCuisine(String cuisineName){
-        implicitWait(50);
-        return driver.findElement(By.xpath("//*[contains(text(), '"+cuisineName+"')]"));
+        implicitWait(10);
+        return driver.findElement(By.xpath("//*[contains(text(), '" + cuisineName + "')]"));
     }
 
-    public List<String> getSnacks(String cuisineName){
-        List<String> snackNamesList= new ArrayList<>();
-        implicitWait(25);
-        getCuisine(cuisineName).click();
-        List<WebElement> elements = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//div[@id='cuisine']/div[@class='btn draggable recepies_btn ui-draggable']")));
-        if (elements.isEmpty()){
-            getBackToCuisinesButton().click();
-            return snackNamesList;
-        }else{
-            for (WebElement snackElement: elements){
-                if (snackElement.isDisplayed()){
-                    snackNamesList.add(snackElement.getText());
-                }
-            }
-            implicitWait(50);
-            getBackToCuisinesButton().click();
-            return snackNamesList;
+    public List<String> getSnacks(String cuisine){
+        List<WebElement> elements;
+        List<String> snackNames = new ArrayList<>();
+        getCuisine(cuisine).click();
+        getSnacksButton().click();
+        implicitWait(40L);
+        elements = driver.findElements(By.xpath("//div[@id='collapseOne']/div[1]/div[@class='recipe_on_page btn-link']"));
+        for (WebElement snackElement: elements){
+            snackNames.add(snackElement.getText());
         }
+        getBackToCuisinesButton().click();
+        implicitWait(40L);
+        return snackNames;
     }
 }
