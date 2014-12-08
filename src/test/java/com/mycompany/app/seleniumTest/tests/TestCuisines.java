@@ -2,7 +2,6 @@ package com.mycompany.app.seleniumTest.tests;
 
 import com.mycompany.app.seleniumTest.Cuisine;
 import com.mycompany.app.seleniumTest.steps.MenuSteps;
-import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,14 +13,11 @@ import java.util.List;
 
 import static junit.framework.TestCase.assertTrue;
 
-/**
- * Created by gatto on 12/7/14.
- */
+
 public class TestCuisines {
     WebDriver driver;
     MenuSteps step;
-    Set<String> mandatoryCuisineNames = new HashSet<String>(Arrays.asList("Украинская",
-            "Русская",
+    Set<String> mandatoryCuisineNames = new HashSet<>(Arrays.asList("Русская",
             "Японская",
             "Китайская",
             "Тайская",
@@ -58,7 +54,6 @@ public class TestCuisines {
     @Test
     public void frenchMenuShouldContainSnacks(){
         step.clickOnBreakfastButton();
-        Map<Cuisine,List<String>> currentSnacks = step.findAllSnacks();
         assertTrue(step.cuisineShouldContainSnacks("Французская",mandatoryFrenchSnacks));
     }
 }

@@ -1,10 +1,8 @@
 package com.mycompany.app.seleniumTest.pages;
 
-import com.mycompany.app.seleniumTest.Cuisine;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
@@ -22,7 +20,7 @@ public class MenuPage {
         driver.manage().window().maximize();
         driver.get(PAGEURL);
         this.driver=driver;
-        wait= new WebDriverWait(driver, 300);
+        wait= new WebDriverWait(driver, 50);
     }
     private void implicitWait(int seconds){
         driver.manage().timeouts().implicitlyWait(seconds, TimeUnit.SECONDS);
@@ -33,7 +31,8 @@ public class MenuPage {
     }
 
     public WebElement getBackToCuisinesButton(){
-        return wait.until(ExpectedConditions.presenceOfElementLocated(By.id("back")));
+        implicitWait(50);
+        return driver.findElement(By.id("back"));
     }
 
     public List<WebElement> getCuisines(){
@@ -42,7 +41,8 @@ public class MenuPage {
     }
 
     public WebElement getCuisine(String cuisineName){
-        return wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(), '"+cuisineName+"')]")));
+        implicitWait(50);
+        return driver.findElement(By.xpath("//*[contains(text(), '"+cuisineName+"')]"));
     }
 
     public List<String> getSnacks(String cuisineName){
@@ -59,7 +59,7 @@ public class MenuPage {
                     snackNamesList.add(snackElement.getText());
                 }
             }
-            implicitWait(25);
+            implicitWait(50);
             getBackToCuisinesButton().click();
             return snackNamesList;
         }

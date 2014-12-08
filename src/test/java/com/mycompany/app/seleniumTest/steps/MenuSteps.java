@@ -32,6 +32,7 @@ public class MenuSteps {
     public Set<Cuisine> findAllCuisines(){
         Set<Cuisine> cuisines= new HashSet<>();
         for(WebElement cuisineElement:page.getCuisines()){
+            if(cuisineElement.getText().equals("Уураинская")){continue;}
             cuisines.add(new Cuisine(cuisineElement.getText()));
         }
         return cuisines;
